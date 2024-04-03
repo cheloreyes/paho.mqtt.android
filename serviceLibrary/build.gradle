@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'com.google.devtools.ksp'
 }
+apply from: rootProject.file('gradle-mvn-push.gradle')
 
 android {
     namespace 'info.mqtt.android.service'

@@ -20,6 +20,10 @@ jobs:
         with:
           skip-unshallow: 'true'
           commit-ish: HEAD
+      # Create secrets.properties file with the info from repository secrets.
+      - name: Create secrets file
+        run: |
+          echo '${{ secrets.REPO_SECRETS }}' >> secrets.properties
       - name: Check pre-release
         run: |
           echo "tag=${{steps.tagger.outputs.tag}}"
@@ -53,3 +57,7 @@ jobs:
             ./serviceLibrary/build/outputs/aar/serviceLibrary-release.aar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Release
+        run: |
+            NEW_VERSION=$(echo "${GITHUB_REF/v/}" | cut -d "/" -f3)
+            ./gradlew -PmVersion=${NEW_VERSION} -PmVariant=release -PmId=serviceLibrary :serviceLibrary:publish
