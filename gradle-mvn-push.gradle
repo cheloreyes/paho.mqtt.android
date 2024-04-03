@@ -8,7 +8,6 @@ def libraryGroupId = "chelo.android"
 def libraryVersion = mVersion// the version code define the library to be consumed
 def libraryArtifact = getArtifactId(mId, mVariant)
 def libraryPath= getArtifactFilePath(mId, mVariant)
-def dependencyTree = "implementation"
 
 def getArtifactFilePath(id, variant) {
             return "$buildDir/outputs/aar/${id}-release.aar"
@@ -28,7 +27,7 @@ publishing {
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
                 //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
-                configurations.getByName(dependencyTree).allDependencies.each {
+                configurations.getByName("implementation").allDependencies.each {
                     if (it.name != 'unspecified') {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
                         dependencyNode.appendNode('groupId', it.group)
