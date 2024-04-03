@@ -10,12 +10,12 @@ android {
     testNamespace 'info.mqtt.android.service.test'
     defaultConfig {
         minSdkVersion 21
-        compileSdk 34
-        targetSdkVersion 34
+        compileSdk rootProject.ext.compileSdkVersion
+        targetSdkVersion rootProject.ext.targetSdk
 
         // Android Studio 4.1 doesn't generate versionName in libraries any more
         // https://developer.android.com/studio/releases/gradle-plugin#version_properties_removed_from_buildconfig_class_in_library_projects
-        buildConfigField "String", 'VERSION_NAME', "\"1.0.0\""
+        buildConfigField "String", 'VERSION_NAME', "\"" + getTag() + "\""
 
         testApplicationId "info.mgtt.android.service.test"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,14 +30,6 @@ android {
         }
 
         buildTypes {
-            debug {
-                minifyEnabled false
-                consumerProguardFile('proguard-sdk.pro')
-            }
-            staging {
-                minifyEnabled false
-                consumerProguardFile('proguard-sdk.pro')
-            }
             release {
                 minifyEnabled false
                 consumerProguardFile('proguard-sdk.pro')
@@ -56,9 +48,6 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    buildFeatures{
-        buildConfig true
-    }
 }
 
 dependencies {
@@ -66,12 +55,12 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.core:core-ktx:1.12.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.23"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.work:work-runtime-ktx:2.9.0"
-    implementation "com.github.AppDevNext.Logcat:LogcatCoreLib:3.2"
+    implementation "com.github.AppDevNext.Logcat:LogcatCoreLib:$logcatVersion"
 
-    implementation "androidx.room:room-runtime:2.6.1"
-    ksp "androidx.room:room-compiler:2.6.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
 
     androidTestImplementation "androidx.test.ext:junit-ktx:1.1.5"
     androidTestUtil "androidx.test.services:test-services:1.4.2"
