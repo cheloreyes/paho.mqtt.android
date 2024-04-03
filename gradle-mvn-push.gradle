@@ -4,11 +4,11 @@ def secretsFile = rootProject.file("secrets.properties")
 def properties = new Properties()
 properties.load(new FileInputStream(secretsFile))
 
-def libraryGroupId = "chelo.instaleap.android"
+def libraryGroupId = "chelo.android"
 def libraryVersion = mVersion// the version code define the library to be consumed
 def libraryArtifact = getArtifactId(mId, mVariant)
 def libraryPath= getArtifactFilePath(mId, mVariant)
-def dependencyTree = "releaseImplementation"
+def dependencyTree = "implementation"
 
 def getArtifactFilePath(id, variant) {
             return "$buildDir/outputs/aar/${id}-release.aar"
